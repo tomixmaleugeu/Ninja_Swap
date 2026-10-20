@@ -34,3 +34,32 @@
 // =====================================================================
 
 package parse
+
+import (
+	"errors"
+	"math"
+	"strconv"
+)
+
+func Parse(args []string) ([]int32, error) {
+	var result []int32
+	seen := make(map[int32]bool)
+	for _, arg := range args {
+		val, err := strconv.Atoi(arg)
+		if err != nil {
+			return nil, err
+		}
+		if val < math.MinInt32 || val > math.MaxInt32 {
+			return nil, errors.New("valeur hors des limites d'un int32")
+		}
+		val32 := int32(val)
+
+		if seen[val32] {
+			return nil, errors.New("doublon détecté")
+		}
+		seen[val32] = true
+
+		result = append(result, val32)
+	}
+	return result, nil
+}
