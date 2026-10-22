@@ -38,6 +38,46 @@
 
 package main
 
+import (
+    "bufio"
+    "fmt"
+    "os"
+    "ninja-swap/internal/parse"
+    "ninja-swap/internal/rouleau"
+)
+
+func erreur() {
+    fmt.Fprintln(os.Stderr, "Error")
+    os.Exit(1)
+}
+
 func main() {
-	// TODO : à vous de jouer, genin.
+    valeurs, err := parse.Parse(os.Args[1:])
+    if err != nil {
+        erreur()
+    }
+
+    a := make([]int, len(valeurs))
+    for i, v := range valeurs {
+        a[i] = int(v)
+    }
+
+    r := &rouleau.Rouleaux{A: a}
+
+    scanner := bufio.NewScanner(os.Stdin)
+    for scanner.Scan() {
+        ligne := scanner.Text()
+        if err := r.Appliquer(ligne); err != nil {
+            erreur()
+        }
+    }
+    if scanner.Err() != nil {
+        erreur()
+    }
+
+    if r.EstTrie() {
+        fmt.Println("OK")
+    } else {
+        fmt.Println("KO")
+    }
 }
