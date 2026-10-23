@@ -39,16 +39,16 @@
 package main
 
 import (
-    "bufio"
-    "fmt"
-    "os"
-    "ninja-swap/internal/parse"
-    "ninja-swap/internal/rouleau"
+	"bufio"
+	"fmt"
+	"os"
+	"ninja-swap/internal/parse"
+	"ninja-swap/internal/rouleau"
 )
 
 func erreur() {
-    fmt.Fprintln(os.Stderr, "Error")
-    os.Exit(1)
+	fmt.Fprintln(os.Stderr, "Error")
+	os.Exit(1)
 }
 
 func main() {
