@@ -39,8 +39,47 @@
 //
 // =====================================================================
 
+
 package main
 
+import (
+	"fmt"
+	"os"
+
+	"ninja-swap/internal/parse"
+	"ninja-swap/internal/rouleau"
+)
+
 func main() {
-	// TODO : à vous de jouer, genin.
+
+	args := os.Args[1:]
+
+	if len(args) == 0 {
+		return
+	}
+
+	archives, err := parse.Parse(args)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Error")
+		os.Exit(1)
+	}
+
+	A := make([]int, len(archives))
+
+	for i, valeur := range archives {
+		A[i] = int(valeur)
+	}
+
+	r := rouleau.Rouleaux{
+		A:     A,
+		B:     []int{},
+		Coups: 0,
+	}
+
+
+	if r.EstTrie() {
+		return
+	}
+
+	
 }

@@ -52,32 +52,32 @@ func erreur() {
 }
 
 func main() {
-	valeurs, err := parse.Parse(os.Args[1:])
-	if err != nil {
-		erreur()
-	}
+    valeurs, err := parse.Parse(os.Args[1:])
+    if err != nil {
+        erreur()
+    }
 
-	a := make([]int, len(valeurs))
-	for i, v := range valeurs {
-		a[i] = int(v)
-	}
+    a := make([]int, len(valeurs))
+    for i, v := range valeurs {
+        a[i] = int(v)
+    }
 
-	r := &rouleau.Rouleaux{A: a}
+    r := &rouleau.Rouleaux{A: a}
 
-	scanner := bufio.NewScanner(os.Stdin)
-	for scanner.Scan() {
-		ligne := scanner.Text()
-		if err := r.Appliquer(ligne); err != nil {
-			erreur()
-		}
-	}
-	if scanner.Err() != nil {
-		erreur()
-	}
+    scanner := bufio.NewScanner(os.Stdin)
+    for scanner.Scan() {
+        ligne := scanner.Text()
+        if err := r.Appliquer(ligne); err != nil {
+            erreur()
+        }
+    }
+    if scanner.Err() != nil {
+        erreur()
+    }
 
-	if r.EstTrie() {
-		fmt.Println("OK")
-	} else {
-		fmt.Println("KO")
-	}
+    if r.EstTrie() {
+        fmt.Println("OK")
+    } else {
+        fmt.Println("KO")
+    }
 }
