@@ -35,3 +35,56 @@
 // =====================================================================
 
 package strategie
+
+import "ninja-swap/internal/rouleau"
+
+func Normaliser(valeurs []int) []int {
+	rangs := make([]int, len(valeurs))
+
+	for i := 0; i < len(valeurs); i++ {
+		for j := 0; j < len(valeurs); j++ {
+			if valeurs[j] < valeurs[i] {
+				rangs[i]++
+			}
+		}
+	}
+
+	return rangs
+}
+
+func NormaliserRouleaux(r *rouleau.Rouleaux) {
+	r.A = Normaliser(r.A)
+}
+
+func Radix(r *rouleau.Rouleaux) []string {
+	suite := []string{}
+  NormaliserRouleaux(r)
+
+  plusGrand := len(r.A) - 1
+  nbBits := 0
+  for (plusGrand >> nbBits) != 0 {
+	  nbBits++
+  }
+
+  n := len(r.A)
+
+for bit := 0; bit < nbBits; bit++ {
+
+	for i := 0; i < n; i++ {
+		if (r.A[0] >> bit) & 1 == 0 {
+	    r.Pb()
+      suite = append(suite, "pb")
+    } else {
+	    r.Ra()
+      suite = append(suite, "ra")
+}
+	}
+
+	for len(r.B) > 0 {
+	    r.Pa()
+      suite = append(suite, "pa")
+  }
+}
+
+	return suite
+}
